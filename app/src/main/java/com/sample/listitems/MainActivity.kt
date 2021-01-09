@@ -36,13 +36,10 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onDeleteClick(position: Int) {
                     itemListAdapter.apply {
-
-                        itemListData.removeAt(position)
-                        MovieListData?.addAll(itemListData)
+                        MovieListData?.removeAt(position)
                         notifyDataSetChanged()
                     }
                 }
-
 
             })
 
@@ -69,28 +66,28 @@ class MainActivity : AppCompatActivity() {
             if (!TextUtils.isEmpty(dialog.edt_label.text.toString()) && !TextUtils.isEmpty(dialog.edt_desc.text.toString())) {
                 if (response == null) {
                     itemListAdapter.apply {
-                        itemListData.add(
+                        MovieListData?.add(
                             ItemPojo(
                                 dialog.edt_label.text.toString().trim(),
                                 dialog.edt_desc.text.toString().trim(),
                                 uri
                             )
                         )
-                        MovieListData?.addAll(itemListData)
+
                         notifyDataSetChanged()
                     }
                 } else {
                     itemListAdapter.apply {
 
-                        itemListData.removeAt(position)
-                        itemListData.add(
+                        MovieListData?.removeAt(position)
+                        MovieListData?.add(
                             position, ItemPojo(
                                 dialog.edt_label.text.toString().trim(),
                                 dialog.edt_desc.text.toString().trim(),
                                 uri
                             )
                         )
-                        MovieListData?.addAll(itemListData)
+
                         notifyDataSetChanged()
                     }
                 }

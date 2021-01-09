@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.sample.listitems.model.ItemPojo
 import kotlinx.android.synthetic.main.item_row_adapter.view.*
 
@@ -27,9 +26,7 @@ class ItemListAdapter
         val data = MovieListData!![position]
         holder.mLabel.text = data.mLabel
         holder.mDescription.text = data.mDescription
-
-
-        Glide.with(context).load(data.mImageLink?.path).into(holder.mImage)
+        holder.mImage.setImageURI(data.mImageLink)
 
         holder.mEdit.setOnClickListener {
             mItemClickListener.onEditClick(data, position)
