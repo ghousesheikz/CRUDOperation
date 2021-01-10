@@ -24,8 +24,8 @@ class ItemListAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val data = MovieListData!![position]
-        holder.mLabel.text = data.mLabel
-        holder.mDescription.text = data.mDescription
+        holder.mLabel.text = "Label : ${data.mLabel}"
+        holder.mDescription.text = "Description : ${data.mDescription}"
         holder.mImage.setImageURI(data.mImageLink)
 
         holder.mEdit.setOnClickListener {
