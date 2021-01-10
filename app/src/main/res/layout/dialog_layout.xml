@@ -30,7 +30,7 @@
             android:id="@+id/capture_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_action_camera" />
 
     </androidx.cardview.widget.CardView>
@@ -65,11 +65,11 @@
         android:drawablePadding="8dp"
         android:focusableInTouchMode="true"
         android:hint="@string/enter_description"
-        android:inputType="number"
-        android:maxLength="10"
+        android:inputType="text"
         android:paddingLeft="5dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
+        android:singleLine="true"
         android:textColorHint="@color/black" />
 
     <LinearLayout

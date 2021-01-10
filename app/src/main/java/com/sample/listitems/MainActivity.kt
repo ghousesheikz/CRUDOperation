@@ -5,12 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.view.Window
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sample.listitems.model.ItemPojo
+import com.sample.listitems.utils.MyScrollController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_layout.*
 
@@ -28,6 +32,22 @@ class MainActivity : AppCompatActivity() {
         itemListData = arrayListOf()
         list_items?.layoutManager = LinearLayoutManager(this)
         list_items?.isNestedScrollingEnabled = false
+        list_items?.addOnScrollListener(object : MyScrollController (){
+            override fun hide() {
+                fab_additem.setVisibility(View.VISIBLE)
+                fab_additem.animate().translationY(0f)
+                    .setStartDelay(200).setInterpolator(DecelerateInterpolator (2f)).start();
+            }
+            override fun show() {
+                fab_additem.animate().translationY(fab_additem.getHeight().toFloat()).setInterpolator(
+                    AccelerateInterpolator(2f)
+                ).start()
+                fab_additem.setVisibility(
+                    View.GONE
+                );
+            }
+
+        })
         itemListAdapter =
             ItemListAdapter(itemListData, this, object : ItemListAdapter.OnItemClickListener {
                 override fun onEditClick(response: ItemPojo?, position: Int) {
@@ -60,6 +80,12 @@ class MainActivity : AppCompatActivity() {
         window.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT)
         dialog.capture_image.setOnClickListener {
             selectImageFromStorage()
+        }
+
+        if (response != null) {
+            dialog.edt_label.setText(response.mLabel)
+            dialog.edt_desc.setText(response.mDescription)
+            dialog.capture_image.setImageURI(response.mImageLink)
         }
 
         dialog.btn_create.setOnClickListener {
