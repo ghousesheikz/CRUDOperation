@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.dialog_layout.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var itemListAdapter: ItemListAdapter
-    private lateinit var itemListData: ArrayList<ItemPojo>
     private val READ_REQUEST_CODE = 42
     private var uri: Uri? = null
     private lateinit var dialog: Dialog
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        itemListData = arrayListOf()
         list_items?.layoutManager = LinearLayoutManager(this)
         list_items?.isNestedScrollingEnabled = false
         list_items?.addOnScrollListener(object : MyScrollController (){
@@ -49,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         })
         itemListAdapter =
-            ItemListAdapter(itemListData, this, object : ItemListAdapter.OnItemClickListener {
+            ItemListAdapter(arrayListOf(), this, object : ItemListAdapter.OnItemClickListener {
                 override fun onEditClick(response: ItemPojo?, position: Int) {
                     createItemDialog(response, position)
                 }
@@ -64,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             })
 
         list_items.adapter = itemListAdapter
-
         fab_additem?.setOnClickListener {
             createItemDialog(null, -1)
         }
@@ -86,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             dialog.edt_label.setText(response.mLabel)
             dialog.edt_desc.setText(response.mDescription)
             dialog.capture_image.setImageURI(response.mImageLink)
+            uri = response.mImageLink
         }
 
         dialog.btn_create.setOnClickListener {
@@ -104,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     itemListAdapter.apply {
-
                         MovieListData?.removeAt(position)
                         MovieListData?.add(
                             position, ItemPojo(
